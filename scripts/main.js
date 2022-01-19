@@ -24,10 +24,10 @@ Library.prototype.createBookCardElement = function() {
   return bookCard;
 }
 
-Library.prototype.createBookCardImgElement = function() {
+Library.prototype.createBookCardImgElement = function(book) {
   const bookCardImg = document.createElement('img');
-  bookCardImg.src = 'img/default-cover.jpg';
-  bookCardImg.alt = 'Default generic book cover'
+  bookCardImg.src = book.coverImage;
+  bookCardImg.alt = 'Book cover, either a default generic one or one inputted by a user';
   return bookCardImg;
 }
 
@@ -37,59 +37,62 @@ Library.prototype.createBookCardTextElement = function() {
   return bookCardText;
 }
 
-Library.prototype.createBookTitleElement = function() {
+Library.prototype.createBookTitleElement = function(book) {
   const bookTitle = document.createElement('h2');
-  bookTitle.textContent = 'Book Title';
+  bookTitle.textContent = book.title;
   return bookTitle;
 }
 
-Library.prototype.createBookAuthorElement = function() {
+Library.prototype.createBookAuthorElement = function(book) {
   const bookAuthor = document.createElement('p');
-  bookAuthor.textContent = 'Book Author';
+  bookAuthor.textContent = book.author;
   return bookAuthor;
 }
 
-Library.prototype.createBookPagesElement = function() {
+Library.prototype.createBookPagesElement = function(book) {
   const bookPages = document.createElement('p');
-  bookPages.textContent = 'Book Pages';
+  bookPages.textContent = book.pages;
   return bookPages;
 }
 
-Library.prototype.createBookReadStatusElement = function() {
+Library.prototype.createBookReadStatusElement = function(book) {
   const bookReadStatus = document.createElement('p');
-  bookReadStatus.textContent = 'Book Read Status';
+  bookReadStatus.textContent = book.readStatus;
   return bookReadStatus;
 }
 
-Library.prototype.addContentsToBookCard = function(bookCard) {
-  bookCard.appendChild(this.createBookCardImgElement());
+Library.prototype.addContentsToBookCard = function(bookCard, book) {
+  bookCard.appendChild(this.createBookCardImgElement(book));
   const bookCardText = this.createBookCardTextElement();
-  this.addContentsToBookCardText(bookCardText);
+  this.addContentsToBookCardText(bookCardText, book);
   bookCard.appendChild(bookCardText);
 }
 
-Library.prototype.addContentsToBookCardText = function(bookCardText) {
-  bookCardText.appendChild(this.createBookTitleElement());
-  bookCardText.appendChild(this.createBookAuthorElement());
-  bookCardText.appendChild(this.createBookPagesElement());
-  bookCardText.appendChild(this.createBookReadStatusElement());
+Library.prototype.addContentsToBookCardText = function(bookCardText, book) {
+  bookCardText.appendChild(this.createBookTitleElement(book));
+  bookCardText.appendChild(this.createBookAuthorElement(book));
+  bookCardText.appendChild(this.createBookPagesElement(book));
+  bookCardText.appendChild(this.createBookReadStatusElement(book));
 }
 
 Library.prototype.displayBookCards = function() {
   const cardContainer = document.querySelector('.card-container');
 
-  const bookCard = this.createBookCardElement();
-  this.addContentsToBookCard(bookCard);
-  cardContainer.appendChild(bookCard);
+  this.books.forEach (book => {
+    const bookCard = this.createBookCardElement();
+    this.addContentsToBookCard(bookCard, book);
+    cardContainer.appendChild(bookCard);
+  })
 }
 
 // Book object
 
-function Book(title, author, pages, readStatus) {
+function Book(title, author, pages, readStatus, coverImage = 'img/default-cover.jpg') {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.readStatus = readStatus;
+  this.coverImage = coverImage;
 }
 
 Book.prototype.info = function () {
@@ -105,5 +108,14 @@ Book.prototype.info = function () {
 // Main
 const library = new Library();
 
-library.displayBookCards();
+const dune = new Book('Dune', 'Frank Herbert', 400, true, 'https://cdn.pastemagazine.com/www/system/images/photo_albums/best-book-covers-fall-2019/large/bbcdune.jpg?1384968217')
 
+const genericBook = new Book('Title', 'Author', 300, false)
+
+library.books.push(dune);
+library.books.push(genericBook);
+library.books.push(genericBook);
+library.books.push(genericBook);
+library.books.push(genericBook);
+
+library.displayBookCards();
