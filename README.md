@@ -7,3 +7,5 @@ Skills / Tools demonstrated:
   - CSS design (flexbox, grid, typography, colors, etc.)
   - semantic HTML
   - responsive design
+  - JS event handlers
+  - Working with forms in JS
