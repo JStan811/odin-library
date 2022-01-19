@@ -1,0 +1,6 @@
+1. Design page on paper
+  - Done.
+2. Write psuedo-code
+  - Done.
+3. Research how to implement (may want to go back through JS Foundations course)
+4. Code
