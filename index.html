@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='css/normalize.css'>
   <link rel='stylesheet' href='css/main.css'>
   <script src='scripts/main.js' defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,11 +15,27 @@
 <body>
   <main class='container'>
     <h1>Book Shelf</h1>
+    <button class='new-book-button'>New Book</button>
     <section class='card-container'>
     </section>
   </main>
   <footer>
     <p>created by Jake Standley (GH)</p>
   </footer>
+  <div class = 'form-container'>
+    <form>
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title"><br>
+      <label for="author">Author:</label><br>
+      <input type="text" id="author" name="author"><br>
+      <label for="pages">Length (# of pages):</label><br>
+      <input type="text" id="pages" name="pages"><br>
+      <input type="checkbox" id="readStatus" name="readStatus" value="true">
+      <label for="readStatus">Read?</label><br>
+      <label for="coverImage">Cover Image URL (optional):</label><br>
+      <input type="text" id="coverImage" name="coverImage"><br>
+      <input type="submit" id ='new-book-submit' value="Add New Book!">
+    </form>
+  </div>
 </body>
 </html>

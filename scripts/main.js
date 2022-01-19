@@ -1,22 +1,11 @@
+// Object set up
+const library = new Library();
+
 // Library object
 
 function Library() {
   this.books = [];
 }
-
-// function addBookToLibrary() {
-//   let title = prompt("What is the book's title?");
-//   let author = prompt("Who is the book's author?");
-//   let pages = prompt("How many pages does the book have?");
-//   let readStatusResponse = prompt("Have you read the book? Enter y for yes. Any other response will be taken as no.");
-//   let readStatus = false;
-
-//   if(readStatusResponse === 'y') {
-//     readStatus = true;
-//   }
-
-//   myLibrary.push(new Book(title, author, pages, readStatus))
-// }
 
 Library.prototype.createBookCardElement = function() {
   const bookCard = document.createElement('article');
@@ -85,6 +74,33 @@ Library.prototype.displayBookCards = function() {
   })
 }
 
+Library.prototype.clearBookCards = function() {
+  const cardContainer = document.querySelector('.card-container');
+
+  while (cardContainer.firstChild) {
+    cardContainer.removeChild(cardContainer.firstChild);
+  }
+}
+
+Library.prototype.addBookToLibraryOnSubmit = function() {
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+  const pages = document.getElementById('pages').value;
+  const readStatus = document.getElementById('readStatus').value;
+  console.log(readStatus);
+  let coverImage;
+  if (document.getElementById('coverImage').value) {
+    coverImage = document.getElementById('coverImage').value;
+  }
+
+  this.books.push(new Book(title, author, pages, readStatus, coverImage));
+
+  this.clearBookCards();
+  this.displayBookCards()
+
+  newBookFormContainer.style.display = 'none';
+}
+
 // Book object
 
 function Book(title, author, pages, readStatus, coverImage = 'img/default-cover.jpg') {
@@ -105,17 +121,27 @@ Book.prototype.info = function () {
   }
 }
 
+// Page events
+// show form upon clicking new book
+const newBookBtn = document.querySelector('.new-book-button');
+const newBookFormContainer = document.querySelector('.form-container');
+newBookBtn.addEventListener('click', () => {
+  newBookFormContainer.style.display = 'flex';
+})
+
+// add book to library upon clicking submit
+const newBookForm = document.querySelector('form');
+newBookForm.addEventListener('submit', e => {
+  // prevent form from submitting
+  e.preventDefault();
+
+  library.addBookToLibraryOnSubmit();
+});
+
 // Main
-const library = new Library();
-
-const dune = new Book('Dune', 'Frank Herbert', 400, true, 'https://cdn.pastemagazine.com/www/system/images/photo_albums/best-book-covers-fall-2019/large/bbcdune.jpg?1384968217')
-
-const genericBook = new Book('Title', 'Author', 300, false)
-
-library.books.push(dune);
-library.books.push(genericBook);
-library.books.push(genericBook);
-library.books.push(genericBook);
-library.books.push(genericBook);
-
 library.displayBookCards();
+
+// write a function to just display one book, then do that after a user adds it
+// but then whats the point of having an array, I suppose since I have the array
+// I should just add the new book to the array, wipe the page, then run display
+// again
