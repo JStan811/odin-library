@@ -8,5 +8,6 @@
 Misc.
   - Do I need to put attributions for the google font and color scheme (#23 from https://webflow.com/blog/best-color-combinations?
     - maybe just add a section to README (font used: color combo from: etc.)
-  - design new book button
+  - design new book button and change read status button
+  - improve card design (hard width/height values? make buttons look better? how to organize information in a better looking way? How to handle super long titles (this could probably be handled with form validation)?)
   - form validation

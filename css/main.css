@@ -44,6 +44,21 @@ img {
   border: 1px solid #201E20;
   border-radius: 0.5rem;
   background-color: #E0A96D;
+  box-shadow: 0 0 10px;
+}
+
+.card-redesign {
+  flex-basis: 25rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #201E20;
+  border-radius: 0.5rem;
+  background-color: #E0A96D;
+  box-shadow: 0 0 10px;
 }
 
 .form-container {
