@@ -7,5 +7,6 @@
 
 Misc.
   - Do I need to put attributions for the google font and color scheme (#23 from https://webflow.com/blog/best-color-combinations?
+    - maybe just add a section to README (font used: color combo from: etc.)
   - design new book button
   - form validation
