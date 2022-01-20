@@ -21,9 +21,9 @@ Library.prototype.createBookCardImgElement = function(book) {
   return bookCardImg;
 }
 
-Library.prototype.createBookCardTextElement = function() {
+Library.prototype.createBookCardInfoElement = function() {
   const bookCardText = document.createElement('section');
-  bookCardText.classList.add('card-text');
+  bookCardText.classList.add('card-info');
   return bookCardText;
 }
 
@@ -35,13 +35,13 @@ Library.prototype.createBookTitleElement = function(book) {
 
 Library.prototype.createBookAuthorElement = function(book) {
   const bookAuthor = document.createElement('p');
-  bookAuthor.textContent = book.author;
+  bookAuthor.textContent = `by ${book.author}`;
   return bookAuthor;
 }
 
 Library.prototype.createBookPagesElement = function(book) {
   const bookPages = document.createElement('p');
-  bookPages.textContent = book.pages;
+  bookPages.textContent = `${book.pages} pages`;
   return bookPages;
 }
 
@@ -53,12 +53,13 @@ Library.prototype.createBookReadStatusElement = function(book) {
 
 Library.prototype.createRemoveBookButton = function() {
   const removeBookButton = document.createElement('button');
+  removeBookButton.classList.add('remove-book-button');
   removeBookButton.textContent = 'Remove';
   return removeBookButton;
 }
 
 Library.prototype.addRemoveBookClickEvent = function(removeBookButton) {
-  const parentCard = removeBookButton.parentNode;
+  const parentCard = removeBookButton.parentElement.parentElement.parentElement;
   const bookIndex = parentCard.dataset.indexNumber;
   removeBookButton.addEventListener('click', () => {
     this.books.splice(bookIndex, 1);
@@ -67,20 +68,21 @@ Library.prototype.addRemoveBookClickEvent = function(removeBookButton) {
   })
 }
 
-Library.prototype.setUpRemoveBookButton = function(bookCard) {
+Library.prototype.setUpRemoveBookButton = function(bookCardInfo) {
   const removeBookButton = this.createRemoveBookButton();
-  bookCard.appendChild(removeBookButton);
+  bookCardInfo.appendChild(removeBookButton);
   this.addRemoveBookClickEvent(removeBookButton);
 }
 
 Library.prototype.createChangeReadStatusButton = function() {
   const changeReadStatusButton = document.createElement('button');
-  changeReadStatusButton.textContent = 'Change Read Status';
+  changeReadStatusButton.classList.add('change-read-status-button');
+  changeReadStatusButton.textContent = 'Change';
   return changeReadStatusButton;
 }
 
 Library.prototype.addChangeReadStatusClickEvent = function(changeReadStatusButton) {
-  const parentCard = changeReadStatusButton.parentNode;
+  const parentCard = changeReadStatusButton.parentElement.parentElement.parentElement.parentElement
   const bookIndex = parentCard.dataset.indexNumber;
   changeReadStatusButton.addEventListener('click', () => {
     this.books[bookIndex].changeReadStatus();
@@ -89,26 +91,33 @@ Library.prototype.addChangeReadStatusClickEvent = function(changeReadStatusButto
   })
 }
 
-Library.prototype.setUpChangeReadStatusButton = function(bookCard) {
+Library.prototype.setUpChangeReadStatusButton = function(readStatusElement) {
   const changeReadStatusButton = this.createChangeReadStatusButton();
-  bookCard.appendChild(changeReadStatusButton);
+  readStatusElement.appendChild(changeReadStatusButton);
   this.addChangeReadStatusClickEvent(changeReadStatusButton);
 }
 
 Library.prototype.addContentsToBookCard = function(bookCard, book) {
-  bookCard.appendChild(this.createBookCardImgElement(book));
-  const bookCardText = this.createBookCardTextElement();
-  this.addContentsToBookCardText(bookCardText, book);
-  bookCard.appendChild(bookCardText);
-  this.setUpChangeReadStatusButton(bookCard);
-  this.setUpRemoveBookButton(bookCard);
+  const flexDiv1 = document.createElement('div');
+  flexDiv1.classList.add('flex-item-1');
+  flexDiv1.appendChild(this.createBookCardImgElement(book))
+  bookCard.appendChild(flexDiv1);
+  const flexDiv2 = document.createElement('div');
+  flexDiv2.classList.add('flex-item-2');
+  const bookCardInfo = this.createBookCardInfoElement();
+  this.addContentsToBookCardInfo(bookCardInfo, book);
+  flexDiv2.appendChild(bookCardInfo);
+  bookCard.appendChild(flexDiv2);
+  const readStatusElement = bookCardInfo.children[3];
+  this.setUpChangeReadStatusButton(readStatusElement);
+  this.setUpRemoveBookButton(bookCardInfo);
 }
 
-Library.prototype.addContentsToBookCardText = function(bookCardText, book) {
-  bookCardText.appendChild(this.createBookTitleElement(book));
-  bookCardText.appendChild(this.createBookAuthorElement(book));
-  bookCardText.appendChild(this.createBookPagesElement(book));
-  bookCardText.appendChild(this.createBookReadStatusElement(book));
+Library.prototype.addContentsToBookCardInfo = function(bookCardInfo, book) {
+  bookCardInfo.appendChild(this.createBookTitleElement(book));
+  bookCardInfo.appendChild(this.createBookAuthorElement(book));
+  bookCardInfo.appendChild(this.createBookPagesElement(book));
+  bookCardInfo.appendChild(this.createBookReadStatusElement(book));
 }
 
 Library.prototype.displayBookCards = function() {
@@ -130,14 +139,23 @@ Library.prototype.clearBookCards = function() {
 }
 
 Library.prototype.addBookToLibraryOnSubmit = function() {
-  const title = document.getElementById('title').value;
-  const author = document.getElementById('author').value;
-  const pages = document.getElementById('pages').value;
+  let title;
+  if(document.getElementById('title').value) {
+    title = document.getElementById('title').value;
+  };
+  let author;
+  if(document.getElementById('author').value) {
+    author = document.getElementById('author').value;
+  }
+  let pages;
+  if(document.getElementById('pages').value) {
+    pages = document.getElementById('pages').value
+  };
   const readStatus = document.getElementById('readStatus').checked;
   let coverImage;
   if (document.getElementById('coverImage').value) {
     coverImage = document.getElementById('coverImage').value;
-  }
+  };
 
   this.books.push(new Book(title, author, pages, readStatus, coverImage));
 
@@ -149,7 +167,7 @@ Library.prototype.addBookToLibraryOnSubmit = function() {
 
 // Book object
 
-function Book(title, author, pages, readStatus, coverImage = 'img/default-cover.jpg') {
+function Book(title = 'Untitled', author = 'Unknown', pages = 0, readStatus, coverImage = 'img/default-cover.jpg') {
   this.title = title;
   this.author = author;
   this.pages = pages;
