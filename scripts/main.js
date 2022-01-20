@@ -7,9 +7,10 @@ function Library() {
   this.books = [];
 }
 
-Library.prototype.createBookCardElement = function() {
+Library.prototype.createBookCardElement = function(bookIndex) {
   const bookCard = document.createElement('article');
   bookCard.classList.add('card');
+  bookCard.dataset.indexNumber = bookIndex;
   return bookCard;
 }
 
@@ -50,11 +51,30 @@ Library.prototype.createBookReadStatusElement = function(book) {
   return bookReadStatus;
 }
 
+Library.prototype.createRemoveBookButton = function() {
+  const removeBookButton = document.createElement('button');
+  removeBookButton.textContent = 'Remove';
+  return removeBookButton;
+}
+
+Library.prototype.addRemoveBookClickEvent = function(removeBookButton) {
+  const parentCard = removeBookButton.parentNode;
+  const bookIndex = parentCard.dataset.indexNumber;
+  removeBookButton.addEventListener('click', () => {
+    this.books.splice(bookIndex, 1);
+    this.clearBookCards();
+    this.displayBookCards();
+  })
+}
+
 Library.prototype.addContentsToBookCard = function(bookCard, book) {
   bookCard.appendChild(this.createBookCardImgElement(book));
   const bookCardText = this.createBookCardTextElement();
   this.addContentsToBookCardText(bookCardText, book);
   bookCard.appendChild(bookCardText);
+  const removeBookButton = this.createRemoveBookButton();
+  bookCard.appendChild(removeBookButton);
+  this.addRemoveBookClickEvent(removeBookButton);
 }
 
 Library.prototype.addContentsToBookCardText = function(bookCardText, book) {
@@ -67,8 +87,8 @@ Library.prototype.addContentsToBookCardText = function(bookCardText, book) {
 Library.prototype.displayBookCards = function() {
   const cardContainer = document.querySelector('.card-container');
 
-  this.books.forEach (book => {
-    const bookCard = this.createBookCardElement();
+  this.books.forEach((book, index) => {
+    const bookCard = this.createBookCardElement(index);
     this.addContentsToBookCard(bookCard, book);
     cardContainer.appendChild(bookCard);
   })
@@ -87,7 +107,6 @@ Library.prototype.addBookToLibraryOnSubmit = function() {
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
   const readStatus = document.getElementById('readStatus').value;
-  console.log(readStatus);
   let coverImage;
   if (document.getElementById('coverImage').value) {
     coverImage = document.getElementById('coverImage').value;
@@ -140,8 +159,3 @@ newBookForm.addEventListener('submit', e => {
 
 // Main
 library.displayBookCards();
-
-// write a function to just display one book, then do that after a user adds it
-// but then whats the point of having an array, I suppose since I have the array
-// I should just add the new book to the array, wipe the page, then run display
-// again
