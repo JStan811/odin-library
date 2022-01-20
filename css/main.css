@@ -30,7 +30,6 @@ img {
   margin-right: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   max-width: 90rem;
 }
 
