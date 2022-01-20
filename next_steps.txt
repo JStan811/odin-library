@@ -10,4 +10,5 @@ Misc.
     - maybe just add a section to README (font used: color combo from: etc.)
   - design new book button and change read status button
   - improve card design (hard width/height values? make buttons look better? how to organize information in a better looking way? How to handle super long titles (this could probably be handled with form validation)?)
+  - improve form design
   - form validation

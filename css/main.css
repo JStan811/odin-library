@@ -16,13 +16,19 @@ h1 {
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 img {
   width: 6rem;
   height: 9rem;
-  flex-basis: 4rem;
 }
 
 .card-container {
@@ -48,17 +54,53 @@ img {
 }
 
 .card-redesign {
-  flex-basis: 25rem;
+  width: 21.875rem;
+  min-height: 12.5rem;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1rem;
+  padding: 0.5rem;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  gap: 0.5rem;
   border: 1px solid #201E20;
   border-radius: 0.5rem;
   background-color: #E0A96D;
   box-shadow: 0 0 10px;
+}
+
+.flex-item-1 {
+  flex-basis: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-item-2 {
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.change-read-status-button {
+  margin-left: 0.5rem;
+  background-color: #DDC3A5;
+  border: 1px solid #201E20;
+  border-radius: 0.5rem;
+}
+
+.change-read-status-button:hover {
+  background-color: #d5b590;
+}
+
+.remove-book-button {
+  background-color: #992600;
+  color: #DDC3A5;
+  border: 1px solid #201E20;
+  border-radius: 0.5rem;
+}
+
+.remove-book-button:hover {
+  background-color: #802000;
 }
 
 .form-container {
@@ -90,7 +132,7 @@ input {
   margin-bottom: 0.5rem;
 }
 
-button {
+.new-book-button {
   height: 2rem;
   width: 7rem;
   margin-bottom: 2rem;
@@ -99,7 +141,7 @@ button {
   border-radius: 0.5rem;
 }
 
-button:hover {
+.new-book-button:hover {
   background-color: #db9b57;
 }
 
