@@ -47,7 +47,7 @@ Library.prototype.createBookPagesElement = function(book) {
 
 Library.prototype.createBookReadStatusElement = function(book) {
   const bookReadStatus = document.createElement('p');
-  bookReadStatus.textContent = book.readStatus;
+  bookReadStatus.textContent = book.readStatus ? 'Read' : 'Unread';
   return bookReadStatus;
 }
 
@@ -67,14 +67,41 @@ Library.prototype.addRemoveBookClickEvent = function(removeBookButton) {
   })
 }
 
+Library.prototype.setUpRemoveBookButton = function(bookCard) {
+  const removeBookButton = this.createRemoveBookButton();
+  bookCard.appendChild(removeBookButton);
+  this.addRemoveBookClickEvent(removeBookButton);
+}
+
+Library.prototype.createChangeReadStatusButton = function() {
+  const changeReadStatusButton = document.createElement('button');
+  changeReadStatusButton.textContent = 'Change Read Status';
+  return changeReadStatusButton;
+}
+
+Library.prototype.addChangeReadStatusClickEvent = function(changeReadStatusButton) {
+  const parentCard = changeReadStatusButton.parentNode;
+  const bookIndex = parentCard.dataset.indexNumber;
+  changeReadStatusButton.addEventListener('click', () => {
+    this.books[bookIndex].changeReadStatus();
+    this.clearBookCards();
+    this.displayBookCards();
+  })
+}
+
+Library.prototype.setUpChangeReadStatusButton = function(bookCard) {
+  const changeReadStatusButton = this.createChangeReadStatusButton();
+  bookCard.appendChild(changeReadStatusButton);
+  this.addChangeReadStatusClickEvent(changeReadStatusButton);
+}
+
 Library.prototype.addContentsToBookCard = function(bookCard, book) {
   bookCard.appendChild(this.createBookCardImgElement(book));
   const bookCardText = this.createBookCardTextElement();
   this.addContentsToBookCardText(bookCardText, book);
   bookCard.appendChild(bookCardText);
-  const removeBookButton = this.createRemoveBookButton();
-  bookCard.appendChild(removeBookButton);
-  this.addRemoveBookClickEvent(removeBookButton);
+  this.setUpChangeReadStatusButton(bookCard);
+  this.setUpRemoveBookButton(bookCard);
 }
 
 Library.prototype.addContentsToBookCardText = function(bookCardText, book) {
@@ -106,7 +133,7 @@ Library.prototype.addBookToLibraryOnSubmit = function() {
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
-  const readStatus = document.getElementById('readStatus').value;
+  const readStatus = document.getElementById('readStatus').checked;
   let coverImage;
   if (document.getElementById('coverImage').value) {
     coverImage = document.getElementById('coverImage').value;
@@ -138,6 +165,10 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, not read yet
         `;
   }
+}
+
+Book.prototype.changeReadStatus = function () {
+  this.readStatus = this.readStatus === true ? false : true;
 }
 
 // Page events
