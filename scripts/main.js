@@ -1,8 +1,4 @@
-// Object set up
-const library = new Library();
-
 // Library object
-
 function Library() {
   this.books = [];
 }
@@ -166,7 +162,6 @@ Library.prototype.addBookToLibraryOnSubmit = function() {
 }
 
 // Book object
-
 function Book(title = 'Untitled', author = 'Unknown', pages = 0, readStatus, coverImage = 'img/default-cover.jpg') {
   this.title = title;
   this.author = author;
@@ -188,6 +183,9 @@ Book.prototype.info = function () {
 Book.prototype.changeReadStatus = function () {
   this.readStatus = this.readStatus === true ? false : true;
 }
+
+// Object set up
+const library = new Library();
 
 // Page events
 // show form upon clicking new book
