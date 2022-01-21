@@ -1,4 +1,4 @@
-Project from Odin.
+Project from [Odin](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/javascript/lessons/library).
 created by Jake Standley
 
 Skills / Tools demonstrated:
