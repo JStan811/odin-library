@@ -1,5 +1,5 @@
 Project from [Odin](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/javascript/lessons/library).
-created by Jake Standley
+created by Jake Standley, January 2022
 
 Skills / Tools demonstrated:
   - Javascript prototype / protoypal inheritence
