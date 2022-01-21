@@ -205,6 +205,3 @@ newBookForm.addEventListener('submit', e => {
 
   library.addBookToLibraryOnSubmit();
 });
-
-// Main
-library.displayBookCards();
