@@ -121,7 +121,7 @@ input {
 .new-book-button {
   height: 2rem;
   width: 7rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
   background-color: #E0A96D;
   border: 1px solid #201E20;
   border-radius: 0.5rem;
@@ -131,6 +131,13 @@ input {
   background-color: #db9b57;
 }
 
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 footer p {
   margin: 0;
 }
@@ -138,6 +145,7 @@ footer p {
 footer img {
   height: 1rem;
   width: 1rem;
+  margin-top: .1875rem;
   opacity: 0.5;
 }
 
